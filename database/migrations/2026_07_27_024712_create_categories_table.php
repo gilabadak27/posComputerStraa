@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->decimal('purchase_price', 12, 2)->default(0);
-            $table->decimal('sale_price', 12, 2)->default(0);
-            $table->integer('stock')->default(0);
-            $table->string('unit')->default('pcs');
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->string('name')->unique();
             $table->text('description')->nullable();
             $table->timestamps();
         });
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('categories');
     }
 };
