@@ -22,7 +22,7 @@ return new class extends Migration
             $table->decimal('paid_amount', 12, 2);
             $table->decimal('change_amount', 12, 2);
 
-            $table->string('payment_method')->default('cash');
+            $table->enum('payment_method', ['cash', 'qris', 'debit', 'credit'])->default('cash');
 
             $table->timestamps();
         });

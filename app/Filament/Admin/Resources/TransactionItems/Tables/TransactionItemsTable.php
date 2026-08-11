@@ -22,7 +22,7 @@ class TransactionItemsTable
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('price')
-                    ->money()
+                    ->money('IDR')
                     ->sortable(),
                 TextColumn::make('subtotal')
                     ->numeric()

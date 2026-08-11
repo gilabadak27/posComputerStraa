@@ -48,4 +48,9 @@ class Transaction extends Model
     {
         return $this->hasMany(TransactionItem::class);
     }
+
+    public function scopeOnDate($query, string $date)
+    {
+        return $query->whereDate('created_at', $date);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Resources\Products\Schemas;
 
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
@@ -15,6 +16,11 @@ class ProductForm
             ->components([
                 TextInput::make('name')
                     ->required(),
+                FileUpload::make('img')
+                    ->image()
+                    ->directory('products')
+                    ->disk('public')
+                    ->preserveFilenames(),
                 Select::make('category_id')
                     ->relationship('category', 'name')
                     ->label('Kategori')
