@@ -6,7 +6,7 @@
 
     <nav>
         <a href="{{ route('login') }}"
-        class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-400">
+        class="px-4 py-2 bg-blue-300 text-white rounded-lg hover:bg-blue-400">
             Login
         </a>
     </nav>

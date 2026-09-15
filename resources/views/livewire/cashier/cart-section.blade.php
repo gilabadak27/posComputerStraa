@@ -73,6 +73,21 @@
             </span>
         </div>
 
+        <!-- Select Customer -->
+        <div>
+            <label class="text-xs font-bold text-gray-700 block mb-1">Pelanggan / Member (Opsional)</label>
+            <select 
+                wire:model.live="customerId" 
+                class="w-full px-3.5 py-2.5 bg-gray-50 rounded-xl border border-gray-200 text-xs font-bold text-gray-800 focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all outline-none">
+                <option value="">-- Pelanggan Umum (Non-Member) --</option>
+                @foreach ($customers as $cust)
+                    <option value="{{ $cust->id }}">
+                        👤 {{ $cust->name }} (Poin: {{ $cust->points }})
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
         <!-- Payment Method -->
         <div>
             <label class="text-xs font-bold text-gray-700 block mb-1.5">Metode Pembayaran</label>

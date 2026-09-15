@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources\Products\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\ImageColumn;
@@ -22,9 +23,7 @@ class ProductsTable
                     ->label('Image')
                     ->disk('public')
                     ->height(50)
-                    ->width(50)
-                    ->getStateUsing(fn ($record) => $record->img ? asset('storage/' . $record->img) : null)
-                    ->defaultImageUrl('https://via.placeholder.com/50x50?text=No+Image'),
+                    ->width(50),
                 TextColumn::make('category.name')
                     ->label('Kategori')
                     ->sortable()
@@ -60,6 +59,7 @@ class ProductsTable
             ])
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

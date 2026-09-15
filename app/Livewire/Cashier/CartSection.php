@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Cashier;
 
+use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
@@ -15,7 +16,8 @@ class CartSection extends Component
     // Cart state: [ product_id => ['id', 'name', 'price', 'quantity', 'stock', 'unit', 'subtotal'] ]
     public array $cart = [];
 
-    // Payment state
+    // Customer & Payment state
+    public ?int $customerId = null;
     public string $paymentMethod = 'cash';
     public $paidAmount = '';
 
@@ -98,6 +100,7 @@ class CartSection extends Component
     public function clearCart(): void
     {
         $this->cart = [];
+        $this->customerId = null;
         $this->paidAmount = '';
         $this->errorMessage = null;
     }
@@ -148,6 +151,7 @@ class CartSection extends Component
 
                 $transaction = Transaction::create([
                     'user_id' => Auth::id() ?? 1,
+                    'customer_id' => $this->customerId ?: null,
                     'invoice_number' => Transaction::generateInvoiceNumber(),
                     'total_amount' => $total,
                     'paid_amount' => $paid,
@@ -166,12 +170,22 @@ class CartSection extends Component
 
                     Product::where('id', $productId)->decrement('stock', $item['quantity']);
                 }
+
+                if ($this->customerId) {
+                    $earnedPoints = (int) floor($total / 10000);
+                    if ($earnedPoints > 0) {
+                        Customer::where('id', $this->customerId)->increment('points', $earnedPoints);
+                    }
+                }
             });
+
+            $customer = $this->customerId ? Customer::find($this->customerId) : null;
 
             $receiptData = [
                 'invoice_number' => $transaction->invoice_number,
                 'created_at' => $transaction->created_at->format('d/m/Y H:i'),
                 'cashier_name' => Auth::user()->name ?? 'Kasir',
+                'customer_name' => $customer ? $customer->name : null,
                 'payment_method' => strtoupper($transaction->payment_method),
                 'items' => array_values($this->cart),
                 'total_amount' => $transaction->total_amount,
@@ -192,6 +206,8 @@ class CartSection extends Component
 
     public function render()
     {
-        return view('livewire.cashier.cart-section');
+        return view('livewire.cashier.cart-section', [
+            'customers' => Customer::active()->orderBy('name')->get(),
+        ]);
     }
 }

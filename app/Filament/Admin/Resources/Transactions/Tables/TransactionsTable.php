@@ -15,7 +15,12 @@ class TransactionsTable
         return $table
             ->columns([
                 TextColumn::make('user.name')
+                    ->label('Kasir')
                     ->searchable(),
+                TextColumn::make('customer.name')
+                    ->label('Pelanggan')
+                    ->searchable()
+                    ->placeholder('Umum'),
                 TextColumn::make('invoice_number')
                     ->searchable(),
                 TextColumn::make('total_amount')
@@ -42,7 +47,7 @@ class TransactionsTable
                 //
             ])
             ->recordActions([
-                EditAction::make(),
+                // EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

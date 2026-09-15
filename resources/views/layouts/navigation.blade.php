@@ -16,6 +16,14 @@
                        class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('cashier') ? 'border-indigo-600 text-slate-900 font-bold' : 'border-transparent text-slate-600 hover:text-slate-900 font-medium' }} text-sm transition duration-150 ease-in-out">
                         Kasir POS
                     </a>
+                    <a href="{{ route('cashier.reports') }}" 
+                       class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('cashier.reports') ? 'border-indigo-600 text-slate-900 font-bold' : 'border-transparent text-slate-600 hover:text-slate-900 font-medium' }} text-sm transition duration-150 ease-in-out">
+                        Laporan Transaksi
+                    </a>
+                    <a href="{{ route('filament.admin.resources.customers.index') }}" 
+                       class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('filament.admin.resources.customers.*') ? 'border-indigo-600 text-slate-900 font-bold' : 'border-transparent text-slate-600 hover:text-slate-900 font-medium' }} text-sm transition duration-150 ease-in-out">
+                        Pelanggan (Filament Admin)
+                    </a>
                 </div>
             </div>
 
@@ -40,6 +48,10 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        <x-dropdown-link :href="url('/admin')">
+                            {{ __('Filament Admin Panel') }}
+                        </x-dropdown-link>
+
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
@@ -75,6 +87,12 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('cashier')" :active="request()->routeIs('cashier')">
                 {{ __('Kasir POS') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('cashier.reports')" :active="request()->routeIs('cashier.reports')">
+                {{ __('Laporan Transaksi') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('filament.admin.resources.customers.index')" :active="request()->routeIs('filament.admin.resources.customers.*')">
+                {{ __('Pelanggan (Admin)') }}
             </x-responsive-nav-link>
         </div>
 
